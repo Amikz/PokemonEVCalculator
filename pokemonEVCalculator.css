@@ -1,0 +1,39 @@
+html * {
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.content {
+    margin: auto;
+    max-width: 1225px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.flexItem {
+    width: 350px;
+}
+
+.statGrid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: auto auto;
+    grid-template-rows: repeat(6, auto);
+}
+
+button {
+    margin: 10px;
+}
+
+#wildPokemon {
+    margin-bottom: 50px;
+}
