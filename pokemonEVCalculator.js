@@ -10,6 +10,7 @@ var MAX_STAT = 252;
 $(document).ready(function () {
 	repeatSection($("#wildPokemon1"), MAX_WILD);
 	repeatSection($("#partyPokemon1"), PARTY_SIZE);
+	$(".partyPokemon:not(:first)").hide();
 	$(".pokemonSelector option:not(:first-child)").hide();
 
 	modifyNumPokemon($("#addPartyMember"), $("#removePartyMember"), "#partyPokemon", PARTY_SIZE);
@@ -23,7 +24,7 @@ $(document).ready(function () {
 });
 
 /**
- * Clones the given section and inserts new hidden copies after it
+ * Clones the given section and inserts new copies after it
  *
  * @param {JQuery Object} $id The Object to be cloned
  * @param {number} num The total number of sections (including the original)
@@ -37,7 +38,6 @@ function repeatSection($id, num) {
 			if ($(this).is("[for]")) $(this).attr("for", $(this).attr("for").replace("1", i));
 		});
 		$clone.children("legend").text($clone.children("legend").text().replace("1", i));
-		$clone.hide();
 	}
 }
 
