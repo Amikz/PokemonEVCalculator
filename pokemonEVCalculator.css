@@ -11,8 +11,9 @@ button {
 	border-radius: 5px;
 }
 
-input {
+input[type="number"] {
 	height: 25px;
+	text-align: right;
 }
 
 select,
