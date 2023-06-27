@@ -17,49 +17,151 @@
 		<div class="content">
 			<h1>Pokémon EV Calculator</h1>
 
-			<div>
+			<div id="genAndItems">
 				<h2>Generation and Items</h2>
 
-				<fieldset id="generation">
-					<legend>Generation</legend>
+				<div class="flex">
+					<fieldset id="generation">
+						<legend>Generation</legend>
 
-					<div>
-						<input type="radio" id="gen3" name="gen" value="3" />
-						<label for="gen3">3</label>
-					</div>
+						<div>
+							<input type="radio" id="gen3" name="gen" value="3" />
+							<label for="gen3">3</label>
+						</div>
 
-					<div>
-						<input type="radio" id="gen4" name="gen" value="4" />
-						<label for="gen4">4</label>
-					</div>
+						<div>
+							<input type="radio" id="gen4" name="gen" value="4" />
+							<label for="gen4">4</label>
+						</div>
 
-					<div>
-						<input type="radio" id="gen5" name="gen" value="5" />
-						<label for="gen5">5</label>
-					</div>
+						<div>
+							<input type="radio" id="gen5" name="gen" value="5" />
+							<label for="gen5">5</label>
+						</div>
 
-					<div>
-						<input type="radio" id="gen6" name="gen" value="6" />
-						<label for="gen6">6</label>
-					</div>
+						<div>
+							<input type="radio" id="gen6" name="gen" value="6" />
+							<label for="gen6">6</label>
+						</div>
 
-					<div>
-						<input type="radio" id="gen7" name="gen" value="7" />
-						<label for="gen7">7</label>
-					</div>
+						<div>
+							<input type="radio" id="gen7" name="gen" value="7" />
+							<label for="gen7">7</label>
+						</div>
 
-					<div>
-						<input type="radio" id="gen8+" name="gen" value="8" checked />
-						<label for="gen8+">8+</label>
-					</div>
-				</fieldset>
+						<div>
+							<input type="radio" id="gen8+" name="gen" value="8" checked />
+							<label for="gen8+">8+</label>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<legend>Berries</legend>
+
+						<div>
+							<label for="berry">Berry</label>
+							<select id="berry" name="berry">
+								<option value="Pomeg">Pomeg (HP)</option>
+								<option value="Kelpsey">Kelpsey (Atk)</option>
+								<option value="Qualot">Qualot (Def)</option>
+								<option value="Hondew">Hondew (SpA)</option>
+								<option value="Grepa">Grepa (SpD)</option>
+								<option value="Tamato">Tamato (Spe)</option>
+							</select>
+						</div>
+
+						<div>
+							<label for="berryPokemon">Pokémon</label>
+							<select id="berryPokemon" name="berryPokemon" class="pokemonSelector">
+								<option value="1">Pokémon 1</option>
+								<option value="2">Pokémon 2</option>
+								<option value="3">Pokémon 3</option>
+								<option value="4">Pokémon 4</option>
+								<option value="5">Pokémon 5</option>
+								<option value="6">Pokémon 6</option>
+							</select>
+						</div>
+
+						<button id="giveBerry">Give</button>
+					</fieldset>
+
+					<fieldset>
+						<legend>Vitamins</legend>
+
+						<div>
+							<label for="vitamin">Vitamin</label>
+							<select id="vitamin" name="vitamin">
+								<option value="HP Up">HP Up (HP)</option>
+								<option value="Protein">Protein (Atk)</option>
+								<option value="Iron">Iron (Def)</option>
+								<option value="Calcium">Calcium (SpA)</option>
+								<option value="Zinc">Zinc (SpD)</option>
+								<option value="Carbos">Carbos (Spe)</option>
+							</select>
+						</div>
+
+						<div>
+							<label for="vitaminPokemon">Pokémon</label>
+							<select
+								id="vitaminPokemon"
+								name="vitaminPokemon"
+								class="pokemonSelector"
+							>
+								<option value="1">Pokémon 1</option>
+								<option value="2">Pokémon 2</option>
+								<option value="3">Pokémon 3</option>
+								<option value="4">Pokémon 4</option>
+								<option value="5">Pokémon 5</option>
+								<option value="6">Pokémon 6</option>
+							</select>
+						</div>
+
+						<button id="giveVitamin">Give</button>
+					</fieldset>
+
+					<fieldset id="feathers">
+						<legend>Feathers</legend>
+
+						<div>
+							<label for="feather">Feather</label>
+							<select id="feather" name="feather">
+								<option value="Health">Health (HP)</option>
+								<option value="Muscle">Muscle (Atk)</option>
+								<option value="Resist">Resist (Def)</option>
+								<option value="Genius">Genius (SpA)</option>
+								<option value="Clever">Clever (SpD)</option>
+								<option value="Swift">Swift (Spe)</option>
+							</select>
+						</div>
+
+						<div>
+							<label for="featherPokemon">Pokémon</label>
+							<select
+								id="featherPokemon"
+								name="featherPokemon"
+								class="pokemonSelector"
+							>
+								<option value="1">Pokémon 1</option>
+								<option value="2">Pokémon 2</option>
+								<option value="3">Pokémon 3</option>
+								<option value="4">Pokémon 4</option>
+								<option value="5">Pokémon 5</option>
+								<option value="6">Pokémon 6</option>
+							</select>
+						</div>
+
+						<button id="giveFeather">Give</button>
+					</fieldset>
+				</div>
 			</div>
 
 			<div id="wildPokemon">
 				<h2>Wild Pokémon</h2>
 
-				<button id="addWildPokemon">Add Wild Pokémon</button>
-				<button id="removeWildPokemon" disabled="true">Remove Wild Pokémon</button>
+				<div class="addRemovePokemon">
+					<button id="addWildPokemon">Add Wild Pokémon</button>
+					<button id="removeWildPokemon" disabled="true">Remove Wild Pokémon</button>
+				</div>
 
 				<div class="flex">
 					<fieldset id="wildPokemon1" class="flexItem">
@@ -131,8 +233,11 @@
 							</div>
 						</fieldset>
 
-						<button id="addWild1">Add</button>
-						<button id="removeWild1">Undo/Remove</button>
+						<div id="addRemoveEVs">
+							<button id="addEVs">Add</button>
+							<button id="removeEVs">Undo/Remove</button>
+						</div>
+						<button id="resetWildPokemon1">Reset</button>
 					</fieldset>
 				</div>
 			</div>
@@ -140,8 +245,10 @@
 			<div id="partyPokemon">
 				<h2>Party Pokémon</h2>
 
-				<button id="addPartyMember">Add Party Member</button>
-				<button id="removePartyMember" disabled="true">Remove Party Member</button>
+				<div class="addRemovePokemon">
+					<button id="addPartyMember">Add Party Member</button>
+					<button id="removePartyMember" disabled="true">Remove Party Member</button>
+				</div>
 
 				<div class="flex">
 					<fieldset id="partyPokemon1" class="partyPokemon flexItem">
@@ -152,12 +259,24 @@
 							<select id="item1" name="item1" class="item">
 								<option value="None" selected>None</option>
 								<option value="MachoBrace">Macho Brace</option>
-								<option value="PowerWeight">Power Weight (HP)</option>
-								<option value="PowerBracer">Power Bracer (Atk)</option>
-								<option value="PowerBelt">Power Belt (Def)</option>
-								<option value="PowerLens">Power Lens (SpA)</option>
-								<option value="PowerBand">Power Band (SpD)</option>
-								<option value="PowerAnklet">Power Anklet (Spe)</option>
+								<option value="PowerWeight" class="powerItem">
+									Power Weight (HP)
+								</option>
+								<option value="PowerBracer" class="powerItem">
+									Power Bracer (Atk)
+								</option>
+								<option value="PowerBelt" class="powerItem">
+									Power Belt (Def)
+								</option>
+								<option value="PowerLens" class="powerItem">
+									Power Lens (SpA)
+								</option>
+								<option value="PowerBand" class="powerItem">
+									Power Band (SpD)
+								</option>
+								<option value="PowerAnklet" class="powerItem">
+									Power Anklet (Spe)
+								</option>
 							</select>
 						</div>
 
@@ -232,7 +351,7 @@
 							</div>
 						</fieldset>
 
-						<button id="resetPokemon1">Reset</button>
+						<button id="resetPartyPokemon1">Reset</button>
 					</fieldset>
 				</div>
 			</div>

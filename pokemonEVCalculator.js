@@ -1,18 +1,23 @@
 const PARTY_SIZE = 6;
 const MAX_WILD = 3;
-MAX_EVS = 510;
-var powerItemAmount = 8;
-var maxStat = 252;
+const MAX_EVS = 510;
+const BERRY_VITAMIN = 10;
+const GEN_4_BERRY = 110;
+const VITAMIN_MAX = 100;
+var POWER_ITEM_AMT = 8;
+var MAX_STAT = 252;
 
 $(document).ready(function () {
 	repeatSection($("#wildPokemon1"), MAX_WILD);
 	repeatSection($("#partyPokemon1"), PARTY_SIZE);
+	$(".pokemonSelector option:not(:first-child)").hide();
 
 	modifyNumPokemon($("#addPartyMember"), $("#removePartyMember"), "#partyPokemon", PARTY_SIZE);
 	modifyNumPokemon($("#addWildPokemon"), $("#removeWildPokemon"), "#wildPokemon", MAX_WILD);
 
 	updateGeneration();
 
+	modifyEVsFromItems();
 	modifyEVsFromWildPokemon();
 	resetEVs();
 });
@@ -42,6 +47,7 @@ function modifyNumPokemon($add, $remove, pokemon, max) {
 		if (numPokemon < max) {
 			numPokemon++;
 			$(pokemon + numPokemon).show();
+			$(".pokemonSelector option:nth-child(" + numPokemon + ")").show();
 
 			if (numPokemon == max) $add.attr("disabled", true);
 			if (numPokemon > 1) $remove.attr("disabled", false);
@@ -53,6 +59,8 @@ function modifyNumPokemon($add, $remove, pokemon, max) {
 			resetPokemon(pokemon, numPokemon);
 
 			$(pokemon + numPokemon).hide();
+			$(".pokemonSelector option:nth-child(" + numPokemon + ")").hide();
+			resetPokemonSelectors();
 			numPokemon--;
 
 			if (numPokemon == 1) $remove.attr("disabled", true);
@@ -63,14 +71,26 @@ function modifyNumPokemon($add, $remove, pokemon, max) {
 
 function updateGeneration() {
 	$("[name=gen]").change(function () {
-		powerItemAmount = $("[name=gen]:checked").val() >= 7 ? 8 : 4;
-		maxStat = $("[name=gen]:checked").val() >= 6 ? 252 : 255;
+		POWER_ITEM_AMT = $("[name=gen]:checked").val() >= 7 ? 8 : 4;
+		MAX_STAT = $("[name=gen]:checked").val() >= 6 ? 252 : 255;
+
+		if ($("#gen3").is(":checked")) {
+			$(".powerItem").hide();
+		} else {
+			$(".powerItem").show();
+		}
+
+		if ($("[name=gen]:checked").val() < 5) {
+			$("#feathers").hide();
+		} else {
+			$("#feathers").show();
+		}
 	});
 }
 
 function modifyEVsFromWildPokemon() {
 	for (var i = 1; i <= MAX_WILD; i++) {
-		$("#addWild" + i).click(function () {
+		$("#addEVs" + i).click(function () {
 			var idNum = $(this).prop("id").slice(-1);
 
 			$(".partyPokemon:visible").each(function () {
@@ -108,7 +128,7 @@ function modifyEVsFromWildPokemon() {
 			});
 		});
 
-		$("#removeWild" + i).click(function () {
+		$("#removeEVs" + i).click(function () {
 			var idNum = $(this).prop("id").slice(-1);
 
 			$(".partyPokemon:visible").each(function () {
@@ -160,22 +180,22 @@ function calculateTotalEVs($pokemon) {
 function calculateEVs(EVs, item, hasPokerus) {
 	switch (item) {
 		case "PowerWeight":
-			EVs[0] += powerItemAmount;
+			EVs[0] += POWER_ITEM_AMT;
 			break;
 		case "PowerBracer":
-			EVs[1] += powerItemAmount;
+			EVs[1] += POWER_ITEM_AMT;
 			break;
 		case "PowerBelt":
-			EVs[2] += powerItemAmount;
+			EVs[2] += POWER_ITEM_AMT;
 			break;
 		case "PowerLens":
-			EVs[3] += powerItemAmount;
+			EVs[3] += POWER_ITEM_AMT;
 			break;
 		case "PowerBand":
-			EVs[4] += powerItemAmount;
+			EVs[4] += POWER_ITEM_AMT;
 			break;
 		case "PowerAnklet":
-			EVs[5] += powerItemAmount;
+			EVs[5] += POWER_ITEM_AMT;
 			break;
 		case "MachoBrace":
 			EVs = doubleEVs(EVs);
@@ -195,12 +215,12 @@ function doubleEVs(EVs) {
 }
 
 function addEVs($stat, EVs, totalEVs) {
-	if (parseInt($stat.val()) + EVs <= maxStat) {
+	if (parseInt($stat.val()) + EVs <= MAX_STAT) {
 		$stat.val(parseInt($stat.val()) + EVs);
 		totalEVs += EVs;
 	} else {
-		totalEVs += maxStat - parseInt($stat.val());
-		$stat.val(maxStat);
+		totalEVs += MAX_STAT - parseInt($stat.val());
+		$stat.val(MAX_STAT);
 	}
 
 	return totalEVs;
@@ -218,11 +238,125 @@ function removeEVs($stat, EVs, totalEVs) {
 	return totalEVs;
 }
 
+function modifyEVsFromItems() {
+	$("#giveBerry").click(function () {
+		switch ($("#berry").val()) {
+			case "Pomeg":
+				giveBerry($("#partyHP" + $("#berryPokemon").val()));
+				break;
+			case "Kelpsey":
+				giveBerry($("#partyAtk" + $("#berryPokemon").val()));
+				break;
+			case "Qualot":
+				giveBerry($("#partyDef" + $("#berryPokemon").val()));
+				break;
+			case "Hondew":
+				giveBerry($("#partySpA" + $("#berryPokemon").val()));
+				break;
+			case "Grepa":
+				giveBerry($("#partySpD" + $("#berryPokemon").val()));
+				break;
+			case "Tamato":
+				giveBerry($("#partySpe" + $("#berryPokemon").val()));
+				break;
+		}
+	});
+
+	$("#giveVitamin").click(function () {
+		switch ($("#vitamin").val()) {
+			case "HP Up":
+				giveVitamin($("#partyHP" + $("#vitaminPokemon").val()));
+				break;
+			case "Protein":
+				giveVitamin($("#partyAtk" + $("#vitaminPokemon").val()));
+				break;
+			case "Iron":
+				giveVitamin($("#partyDef" + $("#vitaminPokemon").val()));
+				break;
+			case "Calcium":
+				giveVitamin($("#partySpA" + $("#vitaminPokemon").val()));
+				break;
+			case "Zinc":
+				giveVitamin($("#partySpD" + $("#vitaminPokemon").val()));
+				break;
+			case "Carbos":
+				giveVitamin($("#partySpe" + $("#vitaminPokemon").val()));
+				break;
+		}
+	});
+
+	$("#giveFeather").click(function () {
+		switch ($("#feather").val()) {
+			case "Health":
+				giveFeather($("#partyHP" + $("#featherPokemon").val()));
+				break;
+			case "Muscle":
+				giveFeather($("#partyAtk" + $("#featherPokemon").val()));
+				break;
+			case "Resist":
+				giveFeather($("#partyDef" + $("#featherPokemon").val()));
+				break;
+			case "Genius":
+				giveFeather($("#partySpA" + $("#featherPokemon").val()));
+				break;
+			case "Clever":
+				giveFeather($("#partySpD" + $("#featherPokemon").val()));
+				break;
+			case "Swift":
+				giveFeather($("#partySpe" + $("#featherPokemon").val()));
+				break;
+		}
+	});
+}
+
+function giveBerry($stat) {
+	if (parseInt($stat.val()) > 0) {
+		if ($("#gen4").is(":checked") && parseInt($stat.val()) > GEN_4_BERRY) {
+			$stat.val(GEN_4_BERRY);
+		} else if (parseInt($stat.val()) < BERRY_VITAMIN) {
+			$stat.val(0);
+		} else {
+			$stat.val(parseInt($stat.val()) - BERRY_VITAMIN);
+		}
+	}
+}
+
+function giveVitamin($stat) {
+	if ($("[name=gen]:checked").val() < 8) {
+		if (parseInt($stat.val()) < VITAMIN_MAX) {
+			if (parseInt($stat.val()) + BERRY_VITAMIN > VITAMIN_MAX) {
+				$stat.val(VITAMIN_MAX);
+			} else {
+				$stat.val(parseInt($stat.val()) + BERRY_VITAMIN);
+			}
+		}
+	} else {
+		if (parseInt($stat.val()) + BERRY_VITAMIN > MAX_STAT) {
+			$stat.val(MAX_STAT);
+		} else {
+			$stat.val(parseInt($stat.val()) + BERRY_VITAMIN);
+		}
+	}
+}
+
+function giveFeather($stat) {
+	if (parseInt($stat.val()) < MAX_STAT) {
+		$stat.val(parseInt($stat.val()) + 1);
+	}
+}
+
 function resetEVs() {
 	for (var i = 1; i <= PARTY_SIZE; i++) {
-		$("#resetPokemon" + i).click(function () {
+		$("#resetPartyPokemon" + i).click(function () {
 			var idNum = $(this).prop("id").slice(-1);
 			resetPokemon("#partyPokemon", idNum);
+		});
+	}
+
+	for (var i = 1; i <= MAX_WILD; i++) {
+		$("#resetWildPokemon" + i).click(function () {
+			var idNum = $(this).prop("id").slice(-1);
+			resetPokemon("#wildPokemon", idNum);
 		});
 	}
 }
@@ -241,4 +375,8 @@ function resetPokemon(pokemon, id) {
 	$(pokemon + id)
 		.find(":checkbox")
 		.prop("checked", false);
+}
+
+function resetPokemonSelectors() {
+	$(".pokemonSelector").prop("selectedIndex", 0);
 }
