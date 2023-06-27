@@ -1,39 +1,75 @@
 html * {
-    font-family: "Segoe UI", Arial, sans-serif;
+	font-family: "Segoe UI", Arial, sans-serif;
+}
+
+label,
+p {
+	line-height: 1.5em;
+	font-size: 12pt;
 }
 
 .content {
-    margin: auto;
-    max-width: 1225px;
-    padding-left: 0px;
-    padding-right: 0px;
+	margin: auto;
+	max-width: 1225px;
+	padding-left: 0px;
+	padding-right: 0px;
 }
 
 h1 {
-    text-align: center;
+	text-align: center;
 }
 
 .flex {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
 }
 
 .flexItem {
-    width: 350px;
+	width: 350px;
 }
 
 .statGrid {
-    display: grid;
-    gap: 10px;
-    grid-template-columns: auto auto;
-    grid-template-rows: repeat(6, auto);
+	display: grid;
+	gap: 10px;
+	grid-template-columns: auto auto;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+	width: 20px;
+	height: 20px;
+	vertical-align: middle;
+	float: left;
+	margin-left: 15px;
+	margin-right: 30px;
+}
+
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+	margin-top: 18px;
 }
 
 button {
-    margin: 10px;
+	margin: 10px;
 }
 
-#wildPokemon {
-    margin-bottom: 50px;
+fieldset {
+	border: 2px solid #929292;
+	padding: 10px 15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+fieldset fieldset {
+	border: 2px solid #bebebe;
+}
+
+#generation div {
+	width: fit-content;
+	margin: 0px 15px 10px 0px;
+}
+
+#generation {
+	width: fit-content;
 }
